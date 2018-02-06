@@ -1,6 +1,6 @@
 #include "../include/UI_MainWindow.h"
 #include "../../tools/include/slic.h"
-#include "../../tools/include/criminisi.h"
+#include "../../tools/include/sparse_inpaint.h"
 
 #include <opencv2/highgui/highgui.hpp>
 
@@ -43,7 +43,7 @@ void UI_MainWindow::WInpaint_cb (void)
                     255,
                     -1);
         
-    auto result = EE698K::tools::criminisi (wImageBox1->image(), mask);
+    auto result = EE698K::tools::sparse_inpaint (wImageBox1->image(), mask);
     wImageBox2->image (result);
 }
 

@@ -3,7 +3,6 @@ include ${top_builddir}/makeinclude
 
 CPP_SRC = \
 	convert.cxx \
-    criminisi.cxx \
     sparse_inpaint.cxx
 
 OBJ = ${CPP_SRC:%.cxx=%.o}
@@ -23,6 +22,6 @@ libtools.a : ${OBJ}
 	${AR} $@ $(OBJ)
 
 clean:
-	$(RM) $(DEP) $(OBJ)
+	$(RM) $(DEP) $(OBJ) libtools.a
 
 .PHONY: dep obj clean

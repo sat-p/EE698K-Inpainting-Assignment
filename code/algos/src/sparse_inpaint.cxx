@@ -1,4 +1,4 @@
-#include "../include/criminisi.h"
+#include "../include/sparse_inpaint.h"
 
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -11,7 +11,7 @@
 
 /*****************************************************************************/
 
-Criminisi::Criminisi (const cv::Mat& image, const int window_radius) :
+SparseInpaint::SparseInpaint (const cv::Mat& image, const int window_radius) :
     _original (image),
     _rows     (image.rows),
     _cols     (image.cols),
@@ -22,7 +22,7 @@ Criminisi::Criminisi (const cv::Mat& image, const int window_radius) :
 
 /*****************************************************************************/
 
-Criminisi::Criminisi (cv::Mat&& image, const int window_radius) :
+SparseInpaint::SparseInpaint (cv::Mat&& image, const int window_radius) :
     _original (image),
     _rows     (image.rows),
     _cols     (image.cols),
@@ -33,7 +33,7 @@ Criminisi::Criminisi (cv::Mat&& image, const int window_radius) :
 
 /*****************************************************************************/
 
-cv::Mat Criminisi::generate (void)
+cv::Mat SparseInpaint::generate (void)
 {
     generate_contour();
     _modified = _original.clone().setTo (cv::Vec3b (0, 0, 0),
@@ -136,13 +136,13 @@ cv::Mat Criminisi::generate (void)
 
 /*****************************************************************************/
 
-void Criminisi::draw_contour (cv::Mat& image, const cv::Vec3b& colour)
+void SparseInpaint::draw_contour (cv::Mat& image, const cv::Vec3b& colour)
 {
     for (const auto& c : _contour)
         image.at<cv::Vec3b> (c.second, c.first) = colour;
 }
 
-void Criminisi::draw_contour (cv::Mat& image, const uchar colour)
+void SparseInpaint::draw_contour (cv::Mat& image, const uchar colour)
 {
     for (const auto& c : _contour)
         image.at<uchar> (c.second, c.first) = colour;
@@ -150,7 +150,7 @@ void Criminisi::draw_contour (cv::Mat& image, const uchar colour)
 
 /*****************************************************************************/
 
-void Criminisi::generate_contour (void)
+void SparseInpaint::generate_contour (void)
 {
     constexpr int NUM_N = 8;
     
@@ -184,7 +184,7 @@ void Criminisi::generate_contour (void)
 
 /*****************************************************************************/
 
-void Criminisi::generate_priority (void)
+void SparseInpaint::generate_priority (void)
 {
     _confidence = cv::Mat::zeros (_rows, _cols, CV_64FC1);
     
@@ -205,7 +205,7 @@ void Criminisi::generate_priority (void)
 
 /*****************************************************************************/
 
-cv::Point2d Criminisi::generate_normal (const cv::Point& p, const int radius)
+cv::Point2d SparseInpaint::generate_normal (const cv::Point& p, const int radius)
 {
     std::vector<double> X;
     std::vector<double> Y;
@@ -258,7 +258,7 @@ cv::Point2d Criminisi::generate_normal (const cv::Point& p, const int radius)
 
 /*****************************************************************************/
 
-void Criminisi::update_contour (const cv::Point& p)
+void SparseInpaint::update_contour (const cv::Point& p)
 {
     constexpr int NUM_N = 8;
 
@@ -321,7 +321,7 @@ void Criminisi::update_contour (const cv::Point& p)
 
 /*****************************************************************************/ 
 
-double Criminisi::priority (const std::pair<int, int>& p)
+double SparseInpaint::priority (const std::pair<int, int>& p)
 {
     const cv::Point& point = cv::Point (p.first, p.second);
     
@@ -370,7 +370,7 @@ double Criminisi::priority (const std::pair<int, int>& p)
 
 /*****************************************************************************/ 
 
-cv::Mat Criminisi::patch (const cv::Point& p, const cv::Mat& img)
+cv::Mat SparseInpaint::patch (const cv::Point& p, const cv::Mat& img)
 {
     const int r[4] = {p.x, p.y, _cols - p.x, _rows - p.y};
     
@@ -383,7 +383,7 @@ cv::Mat Criminisi::patch (const cv::Point& p, const cv::Mat& img)
 
 /*****************************************************************************/
 
-cv::Mat Criminisi::patch
+cv::Mat SparseInpaint::patch
 (const cv::Point& p,const cv::Mat& img, const int radius)
 {
     return img  (cv::Range (p.y - radius, p.y + radius + 1),

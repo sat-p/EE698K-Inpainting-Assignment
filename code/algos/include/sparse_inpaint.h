@@ -7,16 +7,16 @@
 #include <utility>
 #include <map>
 
-class Criminisi
+class SparseInpaint
 {
 public:
     static constexpr double DEFAULT_W = 0.7;
     static constexpr double DEFAULT_DELTA = 0.005;
     
 public:
-    Criminisi (const cv::Mat& image, const int window_radius = 4);
+    SparseInpaint (const cv::Mat& image, const int window_radius = 4);
     
-    Criminisi (cv::Mat&& image, const int window_radius = 4);
+    SparseInpaint (cv::Mat&& image, const int window_radius = 4);
     
 public:
     void mask (const cv::Mat_<bool>& m) { _mask = m; }
