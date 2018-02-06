@@ -1,0 +1,100 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0303 
+header_name {.h} 
+code_name {.cxx}
+decl {\#undef WC_MainWindow_h} {public global
+} 
+
+decl {\#include "UI_ImageBox.h"} {public global
+} 
+
+decl {\#include "UI_DrawImageBox.h"} {public global
+} 
+
+decl {namespace EE604A {namespace GUI {class WC_MainWindow;}}} {public global
+} 
+
+widget_class {EE604A::GUI::WC_MainWindow} {
+  label {EE604A : Assignment [14610]} open
+  xywh {1 73 800 350} type Double box BORDER_BOX resizable
+  class Fl_Double_Window visible
+} {
+  Fl_Menu_Bar {} {open
+    xywh {0 0 800 25} hotspot
+  } {
+    Submenu {} {
+      label {&File} open
+      xywh {0 0 70 20}
+    } {
+      MenuItem {} {
+        label {&Open}
+        callback {WOpen_cb();}
+        xywh {0 0 36 20}
+      }
+      MenuItem {} {
+        label {&Load Points}
+        callback {WLoadPoints_cb();}
+        xywh {10 10 36 20}
+      }
+      MenuItem {} {
+        label {&Save Points}
+        callback {WSavePoints_cb();}
+        xywh {20 20 36 20}
+      }
+      MenuItem {} {
+        label {&Quit}
+        callback {WQuit_cb();}
+        xywh {0 0 36 20}
+      }
+    }
+    Submenu {} {
+      label {&Tools} open
+      xywh {0 0 70 20}
+    } {
+      MenuItem {} {
+        label {&Inpaint}
+        callback {WInpaint_cb();}
+        xywh {0 0 36 20}
+      }
+    }
+    Submenu {} {
+      label {&Brush Size} open
+      xywh {0 0 70 20}
+    } {
+      MenuItem {} {
+        label small
+        callback {WSmall_cb();}
+        xywh {0 0 36 20}
+      }
+      MenuItem {} {
+        label medium
+        callback {WMedium_cb();}
+        xywh {0 0 36 20}
+      }
+    }
+  }
+  Fl_Group wImageBox1 {open
+    xywh {25 50 360 270}
+    class UI_DrawImageBox
+  } {}
+  Fl_Group wImageBox2 {open
+    xywh {415 50 360 270}
+    class UI_ImageBox
+  } {}
+  decl {virtual void WOpen_cb (void) {}} {private local
+  }
+  decl {virtual void WQuit_cb (void) {}} {private local
+  }
+  decl {virtual void WInpaint_cb (void) {}} {private local
+  }
+  decl {virtual void WBlur_cb (void) {}} {private local
+  }
+  decl {virtual void WSmall_cb (void) {}} {private local
+  }
+  decl {virtual void WMedium_cb (void) {}} {private local
+  }
+  decl {virtual void WLoadPoints_cb (void) {}} {private local
+  }
+  decl {virtual void WSavePoints_cb (void) {}} {private local
+  }
+} 

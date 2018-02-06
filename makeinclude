@@ -1,0 +1,23 @@
+CC = g++
+FLUID = fluid
+AR = ar crv
+RM = rm -rf
+
+LIB = \
+    -L${top_builddir}/code/tools/src \
+    -L${top_builddir}/code/algos/src \
+    -ltools \
+    -lalgos \
+	-lfltk \
+	`pkg-config opencv --cflags --libs`
+    
+FLAGS = -g -Wall -O3 -std=c++11
+MFLAGS = $(FLAGS) -M
+CFLAGS = $(FLAGS) -c
+LFLAGS = $(FLAGS)
+
+%.dep: %.cxx
+	$(CC) $(MFLAGS) $(INCLUDE) $< > $@
+    
+%.o: %.cxx
+	$(CC) $(CFLAGS) $(INCLUDE) $< -o $@
