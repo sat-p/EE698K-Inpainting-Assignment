@@ -11,11 +11,11 @@ decl {\#include "UI_ImageBox.h"} {public global
 decl {\#include "UI_DrawImageBox.h"} {public global
 } 
 
-decl {namespace EE604A {namespace GUI {class WC_MainWindow;}}} {public global
+decl {namespace EE698K {namespace GUI {class WC_MainWindow;}}} {public global
 } 
 
-widget_class {EE604A::GUI::WC_MainWindow} {
-  label {EE604A : Assignment [14610]} open
+widget_class {EE698K::GUI::WC_MainWindow} {
+  label {EE698K : Assignment [14610]} open
   xywh {1 73 800 350} type Double box BORDER_BOX resizable
   class Fl_Double_Window visible
 } {

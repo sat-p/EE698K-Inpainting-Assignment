@@ -10,7 +10,7 @@
 
 /*****************************************************************************/
 
-typedef EE604A::GUI::UI_MainWindow UI_MainWindow;
+typedef EE698K::GUI::UI_MainWindow UI_MainWindow;
 
 /*****************************************************************************/
 
@@ -43,7 +43,7 @@ void UI_MainWindow::WInpaint_cb (void)
                     255,
                     -1);
         
-    auto result = EE604A::tools::criminisi (wImageBox1->image(), mask);
+    auto result = EE698K::tools::criminisi (wImageBox1->image(), mask);
     wImageBox2->image (result);
 }
 

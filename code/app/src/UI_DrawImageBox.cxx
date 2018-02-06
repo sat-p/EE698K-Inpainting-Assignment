@@ -8,7 +8,7 @@
 
 /*****************************************************************************/
 
-typedef EE604A::GUI::UI_DrawImageBox UI_DrawImageBox;
+typedef EE698K::GUI::UI_DrawImageBox UI_DrawImageBox;
 
 /*****************************************************************************/
 
@@ -36,7 +36,7 @@ int UI_DrawImageBox::handle (int event)
                             cv::Vec3b (0, 0, 0),
                             -1);
 
-                _image.reset (EE604A::tools::Mat_to_Fl_Image (_shown));
+                _image.reset (EE698K::tools::Mat_to_Fl_Image (_shown));
     
                 wBox->image (_image.get());
                 wBox->redraw();
@@ -82,7 +82,7 @@ void UI_DrawImageBox::load_points (const std::string& s)
             }
         }
         
-        _image.reset (EE604A::tools::Mat_to_Fl_Image (_shown));
+        _image.reset (EE698K::tools::Mat_to_Fl_Image (_shown));
         
         wBox->image (_image.get());
         wBox->redraw();

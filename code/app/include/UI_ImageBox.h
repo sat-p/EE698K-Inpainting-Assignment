@@ -1,5 +1,5 @@
-#ifndef __EE604A_GUI_UI_IMAGE_BOX_H__
-#define __EE604A_GUI_UI_IMAGE_BOX_H__
+#ifndef __EE698K_GUI_UI_IMAGE_BOX_H__
+#define __EE698K_GUI_UI_IMAGE_BOX_H__
 
 #include "WC_ImageBox.h"
 
@@ -11,7 +11,7 @@
 
 /*****************************************************************************/
 
-namespace EE604A {
+namespace EE698K {
 namespace GUI {
 
 class UI_ImageBox : public WC_ImageBox
@@ -44,7 +44,7 @@ private:
     cv::Mat _resize;
 };
 
-}} // namespaces EE604A, GUI
+}} // namespaces EE698K, GUI
 
 /*****************************************************************************/
 /*****************************************************************************/

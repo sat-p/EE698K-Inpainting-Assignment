@@ -12,11 +12,11 @@ install: install_bin
 install_bin: bin
 	$(INSTALL) -m 755 -D \
 		$(top_builddir)/code/app/src/main \
-		$(BIN_DIR)/EE604A-14610
+		$(BIN_DIR)/-14610
 
 uninstall:
 	$(RM) \
-		$(BIN_DIR)/EE604A-14610
+		$(BIN_DIR)/EE698K-14610
 
 doc:
 	doxygen doxy.conf

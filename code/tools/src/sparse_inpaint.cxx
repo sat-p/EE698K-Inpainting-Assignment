@@ -1,4 +1,4 @@
-#include "../include/criminisi.h"
+#include "../include/sparse_inpaint.h"
 
 #include <opencv2/imgproc/imgproc.hpp>
 
@@ -10,7 +10,7 @@
  * reference
  */
 
-cv::Mat EE698K::tools::criminisi (const cv::Mat& img, const cv::Mat& mask)
+cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask)
 {
     constexpr int RADIUS = 9;
     

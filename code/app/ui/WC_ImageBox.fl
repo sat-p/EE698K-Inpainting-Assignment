@@ -5,10 +5,10 @@ code_name {.cxx}
 decl {\#undef WC_ImageBox_h} {public global
 } 
 
-decl {namespace EE604A { namespace GUI { class WC_ImageBox; }}} {public global
+decl {namespace EE698K { namespace GUI { class WC_ImageBox; }}} {public global
 } 
 
-widget_class {EE604A::GUI::WC_ImageBox} {open
+widget_class {EE698K::GUI::WC_ImageBox} {open
   xywh {252 184 100 100} type Double hide resizable position_relative
 } {
   Function {resize(int X, int Y, int W, int H)} {open return_type {virtual void}

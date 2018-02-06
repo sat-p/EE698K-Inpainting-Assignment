@@ -2,89 +2,89 @@
 
 #include "../include/WC_MainWindow.h"
 
-void EE604A::GUI::WC_MainWindow::cb_Open_i(Fl_Menu_*, void*) {
+void EE698K::GUI::WC_MainWindow::cb_Open_i(Fl_Menu_*, void*) {
   WOpen_cb();
 }
-void EE604A::GUI::WC_MainWindow::cb_Open(Fl_Menu_* o, void* v) {
-  ((EE604A::GUI::WC_MainWindow*)(o->parent()))->cb_Open_i(o,v);
+void EE698K::GUI::WC_MainWindow::cb_Open(Fl_Menu_* o, void* v) {
+  ((EE698K::GUI::WC_MainWindow*)(o->parent()))->cb_Open_i(o,v);
 }
 
-void EE604A::GUI::WC_MainWindow::cb_Load_i(Fl_Menu_*, void*) {
+void EE698K::GUI::WC_MainWindow::cb_Load_i(Fl_Menu_*, void*) {
   WLoadPoints_cb();
 }
-void EE604A::GUI::WC_MainWindow::cb_Load(Fl_Menu_* o, void* v) {
-  ((EE604A::GUI::WC_MainWindow*)(o->parent()))->cb_Load_i(o,v);
+void EE698K::GUI::WC_MainWindow::cb_Load(Fl_Menu_* o, void* v) {
+  ((EE698K::GUI::WC_MainWindow*)(o->parent()))->cb_Load_i(o,v);
 }
 
-void EE604A::GUI::WC_MainWindow::cb_Save_i(Fl_Menu_*, void*) {
+void EE698K::GUI::WC_MainWindow::cb_Save_i(Fl_Menu_*, void*) {
   WSavePoints_cb();
 }
-void EE604A::GUI::WC_MainWindow::cb_Save(Fl_Menu_* o, void* v) {
-  ((EE604A::GUI::WC_MainWindow*)(o->parent()))->cb_Save_i(o,v);
+void EE698K::GUI::WC_MainWindow::cb_Save(Fl_Menu_* o, void* v) {
+  ((EE698K::GUI::WC_MainWindow*)(o->parent()))->cb_Save_i(o,v);
 }
 
-void EE604A::GUI::WC_MainWindow::cb_Quit_i(Fl_Menu_*, void*) {
+void EE698K::GUI::WC_MainWindow::cb_Quit_i(Fl_Menu_*, void*) {
   WQuit_cb();
 }
-void EE604A::GUI::WC_MainWindow::cb_Quit(Fl_Menu_* o, void* v) {
-  ((EE604A::GUI::WC_MainWindow*)(o->parent()))->cb_Quit_i(o,v);
+void EE698K::GUI::WC_MainWindow::cb_Quit(Fl_Menu_* o, void* v) {
+  ((EE698K::GUI::WC_MainWindow*)(o->parent()))->cb_Quit_i(o,v);
 }
 
-void EE604A::GUI::WC_MainWindow::cb_Inpaint_i(Fl_Menu_*, void*) {
+void EE698K::GUI::WC_MainWindow::cb_Inpaint_i(Fl_Menu_*, void*) {
   WInpaint_cb();
 }
-void EE604A::GUI::WC_MainWindow::cb_Inpaint(Fl_Menu_* o, void* v) {
-  ((EE604A::GUI::WC_MainWindow*)(o->parent()))->cb_Inpaint_i(o,v);
+void EE698K::GUI::WC_MainWindow::cb_Inpaint(Fl_Menu_* o, void* v) {
+  ((EE698K::GUI::WC_MainWindow*)(o->parent()))->cb_Inpaint_i(o,v);
 }
 
-void EE604A::GUI::WC_MainWindow::cb_small_i(Fl_Menu_*, void*) {
+void EE698K::GUI::WC_MainWindow::cb_small_i(Fl_Menu_*, void*) {
   WSmall_cb();
 }
-void EE604A::GUI::WC_MainWindow::cb_small(Fl_Menu_* o, void* v) {
-  ((EE604A::GUI::WC_MainWindow*)(o->parent()))->cb_small_i(o,v);
+void EE698K::GUI::WC_MainWindow::cb_small(Fl_Menu_* o, void* v) {
+  ((EE698K::GUI::WC_MainWindow*)(o->parent()))->cb_small_i(o,v);
 }
 
-void EE604A::GUI::WC_MainWindow::cb_medium_i(Fl_Menu_*, void*) {
+void EE698K::GUI::WC_MainWindow::cb_medium_i(Fl_Menu_*, void*) {
   WMedium_cb();
 }
-void EE604A::GUI::WC_MainWindow::cb_medium(Fl_Menu_* o, void* v) {
-  ((EE604A::GUI::WC_MainWindow*)(o->parent()))->cb_medium_i(o,v);
+void EE698K::GUI::WC_MainWindow::cb_medium(Fl_Menu_* o, void* v) {
+  ((EE698K::GUI::WC_MainWindow*)(o->parent()))->cb_medium_i(o,v);
 }
 
-Fl_Menu_Item EE604A::GUI::WC_MainWindow::menu_[] = {
+Fl_Menu_Item EE698K::GUI::WC_MainWindow::menu_[] = {
  {"&File", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"&Open", 0,  (Fl_Callback*)EE604A::GUI::WC_MainWindow::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"&Load Points", 0,  (Fl_Callback*)EE604A::GUI::WC_MainWindow::cb_Load, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"&Save Points", 0,  (Fl_Callback*)EE604A::GUI::WC_MainWindow::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"&Quit", 0,  (Fl_Callback*)EE604A::GUI::WC_MainWindow::cb_Quit, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"&Open", 0,  (Fl_Callback*)EE698K::GUI::WC_MainWindow::cb_Open, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"&Load Points", 0,  (Fl_Callback*)EE698K::GUI::WC_MainWindow::cb_Load, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"&Save Points", 0,  (Fl_Callback*)EE698K::GUI::WC_MainWindow::cb_Save, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"&Quit", 0,  (Fl_Callback*)EE698K::GUI::WC_MainWindow::cb_Quit, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"&Tools", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"&Inpaint", 0,  (Fl_Callback*)EE604A::GUI::WC_MainWindow::cb_Inpaint, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"&Inpaint", 0,  (Fl_Callback*)EE698K::GUI::WC_MainWindow::cb_Inpaint, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {"&Brush Size", 0,  0, 0, 64, FL_NORMAL_LABEL, 0, 14, 0},
- {"small", 0,  (Fl_Callback*)EE604A::GUI::WC_MainWindow::cb_small, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
- {"medium", 0,  (Fl_Callback*)EE604A::GUI::WC_MainWindow::cb_medium, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"small", 0,  (Fl_Callback*)EE698K::GUI::WC_MainWindow::cb_small, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
+ {"medium", 0,  (Fl_Callback*)EE698K::GUI::WC_MainWindow::cb_medium, 0, 0, FL_NORMAL_LABEL, 0, 14, 0},
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0}
 };
-EE604A::GUI::WC_MainWindow::WC_MainWindow(int X, int Y, int W, int H, const char *L)
+EE698K::GUI::WC_MainWindow::WC_MainWindow(int X, int Y, int W, int H, const char *L)
   : Fl_Double_Window(X, Y, W, H, L) {
   _WC_MainWindow();
 }
 
-EE604A::GUI::WC_MainWindow::WC_MainWindow(int W, int H, const char *L)
+EE698K::GUI::WC_MainWindow::WC_MainWindow(int W, int H, const char *L)
   : Fl_Double_Window(0, 0, W, H, L) {
   clear_flag(16);
   _WC_MainWindow();
 }
 
-EE604A::GUI::WC_MainWindow::WC_MainWindow()
-  : Fl_Double_Window(0, 0, 800, 350, "EE604A : Assignment [14610]") {
+EE698K::GUI::WC_MainWindow::WC_MainWindow()
+  : Fl_Double_Window(0, 0, 800, 350, "EE698K : Assignment [14610]") {
   clear_flag(16);
   _WC_MainWindow();
 }
 
-void EE604A::GUI::WC_MainWindow::_WC_MainWindow() {
+void EE698K::GUI::WC_MainWindow::_WC_MainWindow() {
 this->box(FL_BORDER_BOX);
 this->color(FL_BACKGROUND_COLOR);
 this->selection_color(FL_BACKGROUND_COLOR);

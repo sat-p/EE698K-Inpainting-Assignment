@@ -1,5 +1,5 @@
-#ifndef __EE698K_TOOLS_CRIMINISI_H__
-#define __EE698K_TOOLS_CRIMINISI_H__
+#ifndef __EE698K_TOOLS_SPARSE_INPAINT_H__
+#define __EE698K_TOOLS_SPARSE_INPAINT_H__
 
 #include "../../algos/include/criminisi.h"
 
@@ -8,7 +8,7 @@
 namespace EE698K {
 namespace tools {
 
-cv::Mat criminisi (const cv::Mat& img, const cv::Mat& mask);
+cv::Mat sparse_inpaint (const cv::Mat& img, const cv::Mat& mask);
     
 }} // namespaces EE698K, tools
 

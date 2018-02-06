@@ -6,7 +6,7 @@
 
 /*****************************************************************************/
 
-typedef EE604A::GUI::UI_ImageBox UI_ImageBox;
+typedef EE698K::GUI::UI_ImageBox UI_ImageBox;
 
 /*****************************************************************************/
 
@@ -60,7 +60,7 @@ void UI_ImageBox::scale (void)
                                       offset_y,
                                       x_size, y_size)));
     
-    _image.reset (EE604A::tools::Mat_to_Fl_Image (_shown));
+    _image.reset (EE698K::tools::Mat_to_Fl_Image (_shown));
     
     wBox->image (_image.get());
     wBox->redraw();

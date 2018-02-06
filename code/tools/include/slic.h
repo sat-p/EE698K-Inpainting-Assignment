@@ -1,5 +1,5 @@
-#ifndef __EE604A_TOOLS_SLIC_H__
-#define __EE604A_TOOLS_SLIC_H__
+#ifndef __EE698K_TOOLS_SLIC_H__
+#define __EE698K_TOOLS_SLIC_H__
 
 #include "../../algos/include/slicGC.h"
 
@@ -11,7 +11,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-namespace EE604A {
+namespace EE698K {
 namespace tools  {
     
 /*****************************************************************************/
@@ -42,7 +42,7 @@ cv::Mat slic (const cv::Mat& img, const container& connected)
     
     const double step = std::sqrt (w * h) / NR_SUPERPIXELS;
     
-    EE604A::algos::SlicGC slic;
+    EE698K::algos::SlicGC slic;
     slic.generate_superpixels (lab_img, step, NC);
     slic.generate_contours();
     slic.generate_cluster_means (lab_img);
@@ -87,6 +87,6 @@ cv::Mat slic (const cv::Mat& img, const container& connected)
 
 /*****************************************************************************/
     
-}} // namespaces EE604A, tools
+}} // namespaces EE698K, tools
 
 #endif

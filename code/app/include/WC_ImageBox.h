@@ -4,11 +4,11 @@
 #define WC_ImageBox_h
 #include <FL/Fl.H>
 #undef WC_ImageBox_h
-namespace EE604A { namespace GUI { class WC_ImageBox; }}; 
+namespace EE698K { namespace GUI { class WC_ImageBox; }}; 
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Box.H>
 
-class EE604A::GUI::WC_ImageBox : public Fl_Group {
+class EE698K::GUI::WC_ImageBox : public Fl_Group {
 public:
   WC_ImageBox(int X, int Y, int W, int H, const char *L = 0);
 protected:

@@ -1,5 +1,5 @@
-#ifndef __EE604A_ALGOS_SLIC_GRAPH_CLUSTER__
-#define __EE604A_ALGOS_SLIC_GRAPH_CLUSTER__
+#ifndef __EE698K_ALGOS_SLIC_GRAPH_CLUSTER__
+#define __EE698K_ALGOS_SLIC_GRAPH_CLUSTER__
 
 #include "slic.h"
 
@@ -11,7 +11,7 @@
 #include <utility>
 #include <cassert>
 
-namespace EE604A {
+namespace EE698K {
 namespace algos  {
 
 class SlicGC : public Slic
@@ -93,6 +93,6 @@ private:
     int label;
 };
 
-}} //namespace EE604A, ALGOS
+}} //namespace EE698K, ALGOS
 
 #endif

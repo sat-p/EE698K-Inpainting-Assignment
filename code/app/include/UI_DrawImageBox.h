@@ -1,5 +1,5 @@
-#ifndef __EE604A_GUI_UI_DRAW_IMAGE_BOX_H__
-#define __EE604A_GUI_UI_DRAW_IMAGE_BOX_H__
+#ifndef __EE698K_GUI_UI_DRAW_IMAGE_BOX_H__
+#define __EE698K_GUI_UI_DRAW_IMAGE_BOX_H__
 
 #include "UI_ImageBox.h"
 
@@ -9,7 +9,7 @@
 
 /*****************************************************************************/
 
-namespace EE604A {
+namespace EE698K {
 namespace GUI {
 
 class UI_DrawImageBox : public UI_ImageBox
@@ -51,7 +51,7 @@ public:
     std::set<std::pair<int, int>> _coordinates;
 };
 
-}} // namespaces EE604A, GUI
+}} // namespaces EE698K, GUI
 
 /*****************************************************************************/
 /*****************************************************************************/

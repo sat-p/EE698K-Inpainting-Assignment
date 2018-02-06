@@ -1,5 +1,13 @@
 2018-02-06 Satya Panuganti <prakashsatya10@gmail.com>
 
+-Changed EE604A namespace to EE698K
+-Removed object, dependancy and binary files.
+-Added sparse_inpaint.h and sparse_inpaint.cxx to the directory code/tools.
+
+/************************************************************************/
+
+2018-02-06 Satya Panuganti <prakashsatya10@gmail.com>
+
 -Copied own code from "https://github.com/sat-p/EE604A-GUI-Assignment" on
  6th Febrauary 2018.
 -Modified code to remove selective blur functionality.

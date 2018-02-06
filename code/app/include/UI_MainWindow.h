@@ -1,11 +1,11 @@
-#ifndef __EE604A_GUI_MAIN_WINDOW__
-#define __EE604A_GUI_MAIN_WINDOW__
+#ifndef __EE698K_GUI_MAIN_WINDOW__
+#define __EE698K_GUI_MAIN_WINDOW__
 
 #include "WC_MainWindow.h"
 
 /*****************************************************************************/
 
-namespace  EE604A {
+namespace  EE698K {
 namespace GUI {
 
 class UI_MainWindow : public WC_MainWindow
@@ -28,7 +28,7 @@ private:
     virtual void WLoadPoints_cb (void) override;
 };
 
-} } // namespaces EE604A, GUI 
+} } // namespaces EE698K, GUI 
 
 /*****************************************************************************/
 /*****************************************************************************/

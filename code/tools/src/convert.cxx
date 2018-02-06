@@ -4,7 +4,7 @@
 
 /*****************************************************************************/
 
-Fl_RGB_Image* EE604A::tools::Mat_to_Fl_Image (const cv::Mat& img)
+Fl_RGB_Image* EE698K::tools::Mat_to_Fl_Image (const cv::Mat& img)
 {   
     cv::Mat reversed;
     cv::cvtColor (img, reversed, cv::COLOR_BGR2RGB);
