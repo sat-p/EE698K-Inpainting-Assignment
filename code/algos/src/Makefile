@@ -4,6 +4,7 @@ include ${top_builddir}/makeinclude
 CPP_SRC = \
 	slic.cxx \
 	slicGC.cxx \
+	omp.cxx \
 	sparse_inpaint.cxx
 
 OBJ = ${CPP_SRC:%.cxx=%.o}

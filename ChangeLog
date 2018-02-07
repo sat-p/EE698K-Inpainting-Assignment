@@ -1,5 +1,12 @@
 2018-02-07 Satya Panuganti <prakashsatya10@gmail.com>
 
+-Modified create_dictionary to store greyscale images.
+-Implemented an untested version of OMP in code/algos/
+
+/************************************************************************/
+
+2018-02-07 Satya Panuganti <prakashsatya10@gmail.com>
+
 -Fixed bug in create_dictionary.cxx
 
 /************************************************************************/

@@ -11,9 +11,6 @@
 std::vector<cv::Mat> create_dictionary
 (const std::vector<cv::Mat>& images, const int patch_size, const int N)
 {
-    std::cout << "patch size " << patch_size << std::endl;
-    std::cout << "N" << N << std::endl;
-    
     const int num_images = images.size();
     const int patches_per_image = N / num_images;
     
@@ -75,7 +72,7 @@ int main (int argc, char** argv)
         const std::string image_path = path + "/image"
                                         + std::to_string (it) + ".jpg";
         
-        images.emplace_back (cv::imread (image_path));
+        images.emplace_back (cv::imread (image_path, cv::IMREAD_GRAYSCALE));
         
         const int pixels = images.back().rows * images.back().cols;
     

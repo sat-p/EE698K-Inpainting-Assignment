@@ -11,25 +11,31 @@
 
 /*****************************************************************************/
 
-SparseInpaint::SparseInpaint (const cv::Mat& image, const int window_radius) :
+SparseInpaint::SparseInpaint (const cv::Mat& image,
+                              const std::string dictionary_path,
+                              const int dictionary_size,
+                              const int window_radius) :
     _original (image),
     _rows     (image.rows),
     _cols     (image.cols),
     _radius   (window_radius),
     _w        (DEFAULT_W),
     _delta    (DEFAULT_DELTA)
-{}
+{ construct_dictionary (dictionary_path, dictionary_size); }
 
 /*****************************************************************************/
 
-SparseInpaint::SparseInpaint (cv::Mat&& image, const int window_radius) :
+SparseInpaint::SparseInpaint (cv::Mat&& image,
+                              const std::string dictionary_path,
+                              const int dictionary_size,
+                              const int window_radius) :
     _original (image),
     _rows     (image.rows),
     _cols     (image.cols),
     _radius   (window_radius),
     _w        (DEFAULT_W),
     _delta    (DEFAULT_DELTA)
-{}
+{ construct_dictionary (dictionary_path, dictionary_size); }
 
 /*****************************************************************************/
 

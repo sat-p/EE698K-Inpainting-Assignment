@@ -14,9 +14,13 @@ public:
     static constexpr double DEFAULT_DELTA = 0.005;
     
 public:
-    SparseInpaint (const cv::Mat& image, const int window_radius = 4);
+    SparseInpaint (const cv::Mat& image,
+                   const std::string dictionary_path, const int dictionary_size,
+                   const int window_radius = 4);
     
-    SparseInpaint (cv::Mat&& image, const int window_radius = 4);
+    SparseInpaint (cv::Mat&& image,
+                   const std::string dictionary_path, const int dictionary_size,
+                   const int window_radius = 4);
     
 public:
     void mask (const cv::Mat_<bool>& m) { _mask = m; }
@@ -39,6 +43,10 @@ public:
     void draw_contour (cv::Mat& image, const cv::Vec3b& colour);
     void draw_contour (cv::Mat& image, const uchar colour);
 
+private:
+    void construct_dictionary (const std::string dictionary_path,
+                               const int dictionary_size);
+    
 private:
     void generate_contour (void);
     void generate_priority (void);
@@ -65,6 +73,9 @@ protected:
     
     std::set<std::pair<double, std::pair<int, int>>> _pq;
     std::map<std::pair<int, int>, double> _map;
+    
+protected:
+    cv::Mat_<double> _D;
     
 protected:
     int _rows;
