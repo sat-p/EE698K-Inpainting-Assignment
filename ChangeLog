@@ -1,4 +1,10 @@
-2018-02-06 Satya Panuganti <prakashsatya10@gmail.com>
+2018-02-07 Satya Panuganti <prakashsatya10@gmail.com>
+
+-Fixed bug in create_dictionary.cxx
+
+/************************************************************************/
+
+2018-02-07 Satya Panuganti <prakashsatya10@gmail.com>
 
 -Added file code/tools/create_dictionary.cxx which generates a binary
 -create_dictionary which can be used to create the dictionary.

@@ -11,6 +11,9 @@
 std::vector<cv::Mat> create_dictionary
 (const std::vector<cv::Mat>& images, const int patch_size, const int N)
 {
+    std::cout << "patch size " << patch_size << std::endl;
+    std::cout << "N" << N << std::endl;
+    
     const int num_images = images.size();
     const int patches_per_image = N / num_images;
     
@@ -19,13 +22,13 @@ std::vector<cv::Mat> create_dictionary
     for (const auto& img: images) {
         for (int it = 0; it < patches_per_image; ++it) {
         
-            patches.emplace_back (N, N, img.type());
+            patches.emplace_back (patch_size, patch_size, img.type());
             
-            const int r_idx = rand() % (img.rows - N);
-            const int c_idx = rand() % (img.cols - N);
+            const int r_idx = rand() % (img.rows - patch_size);
+            const int c_idx = rand() % (img.cols - patch_size);
             
-            const auto& chosen_patch = img (cv::Range (r_idx, r_idx + N),
-                                            cv::Range (c_idx, c_idx + N));
+            const auto& chosen_patch = img (cv::Range (r_idx, r_idx + patch_size),
+                                            cv::Range (c_idx, c_idx + patch_size));
             
             chosen_patch.copyTo (patches.back());
         }
@@ -34,15 +37,17 @@ std::vector<cv::Mat> create_dictionary
     int images_left = N - (patches_per_image * num_images);
     if (images_left) for (const auto& img : images) {
         
-        patches.emplace_back (N, N, img.type());
+        patches.emplace_back (patch_size, patch_size, img.type());
             
-        const int r_idx = rand() % (img.rows - N);
-        const int c_idx = rand() % (img.cols - N);
+        const int r_idx = rand() % (img.rows - patch_size);
+        const int c_idx = rand() % (img.cols - patch_size);
             
-        patches.back().setTo (img (cv::Range (r_idx, r_idx + N + 1),
-                                   cv::Range (c_idx, c_idx + N + 1)));
+        const auto& chosen_patch = img (cv::Range (r_idx, r_idx + patch_size),
+                                        cv::Range (c_idx, c_idx + patch_size));
+            
+        chosen_patch.copyTo (patches.back());
         
-        if (images_left == 1) break;
+        if (!(--images_left)) break;
     }
     
     return patches;
@@ -52,15 +57,16 @@ std::vector<cv::Mat> create_dictionary
 
 int main (int argc, char** argv)
 {
-    if (argc != 3) {
+    if (argc != 4) {
     
-        std::cout << "Please input number of images and path of images"
+        std::cout << "Please input number of images, dictionary size and path of images"
                   << std::endl;
         return 0;
     }
     
     const int num_images = std::stoi (argv[1]);
-    const std::string path (argv[2]);
+    const int dictionary_size = std::stoi (argv[2]);
+    const std::string path (argv[3]);
     
     std::vector<cv::Mat> images;
     
@@ -83,7 +89,7 @@ int main (int argc, char** argv)
         }
     }
     
-    const auto& patches = create_dictionary (images, 8, 64);
+    const auto& patches = create_dictionary (images, 8, dictionary_size);
     const std::string patch_path = path + "/../patch/";
     
     int count = 1;
