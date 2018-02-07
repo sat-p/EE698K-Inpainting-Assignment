@@ -18,7 +18,7 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X)
     cv::Mat_<double> a;
     std::vector<int> col_order;
     
-    while (cv::norm (r) > epsilon){
+    while (cv::norm (r) > epsilon) {
         for (int i = 0; i < num_atoms; ++i) {
         
             const double inner = r.dot (D.col (i));
@@ -32,8 +32,9 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X)
         
         col_order.push_back (best_idx);
         cv::hconcat (phi, D.col (best_idx), phi);
-        cv::SVD svd (phi);
-        const auto phi_inv = svd.vt.t() * cv::Mat::diag (1.0 / svd.w) * svd.u.t();
+//         cv::SVD svd (phi);
+//         const auto phi_inv = svd.vt.t() * cv::Mat::diag (1.0 / svd.w) * svd.u.t();
+        const auto phi_inv = phi.inv (cv::DECOMP_SVD);
         
         a = phi_inv * X;
         r = X - phi * a;

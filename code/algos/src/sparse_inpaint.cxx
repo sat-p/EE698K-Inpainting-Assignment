@@ -1,5 +1,7 @@
 #include "../include/sparse_inpaint.h"
 
+#include "../include/omp.h"
+
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -62,21 +64,27 @@ cv::Mat SparseInpaint::generate (void)
         const std::pair<int, int>& point = _pq.rbegin()->second;
         const cv::Point p (point.first, point.second);
         
-        const auto& phi_p = patch (p, _modified);
-        const int radius = (phi_p.rows - 1) / 2;
         
-        pMask = patch (p, _mask, radius);
-        pInvMask = ~pMask;
         
-        templateMask = (pInvMask);
+        auto phi_p = patch (p, _modified);
+        phi_p = phi_p.resize (0, phi_p.rows * phi_p.cols);
+        cv::Mat_<double> D = _D.clone();
         
-        for (int i = 0; i < 3; ++i)
-            mergeArrays[i] = templateMask;
         
-        cv::merge(mergeArrays, 3, templateMask);
-
-        cv::matchTemplate (_modified, phi_p, resSSD, CV_TM_SQDIFF, templateMask);        
-        
+//         const int radius = (phi_p.rows - 1) / 2;
+//         
+//         pMask = patch (p, _mask, radius);
+//         pInvMask = ~pMask;
+//         
+//         templateMask = (pInvMask);
+//         
+//         for (int i = 0; i < 3; ++i)
+//             mergeArrays[i] = templateMask;
+//         
+//         cv::merge(mergeArrays, 3, templateMask);
+// 
+//         cv::matchTemplate (_modified, phi_p, resSSD, CV_TM_SQDIFF, templateMask);        
+//         
 //         cv::Mat mean_p, var_p;
 //         cv::meanStdDev (phi_p, mean_p, var_p, pInvMask);
 //         
@@ -99,19 +107,19 @@ cv::Mat SparseInpaint::generate (void)
 //             }
 //         }
         
-        std::cerr << "Points in contour : " << _pq.size() << std::endl;
-        
-        resSSD.setTo (std::numeric_limits<float>::max(),
-                   dilatedMask (cv::Range (radius, _rows - radius),
-                                cv::Range (radius, _cols - radius)));
-        
-        cv::Point q;
-        cv::minMaxLoc (resSSD, NULL, NULL, &q);
-        
-        q = q + cv::Point (radius, radius);
-        
-        const auto& phi_q = patch (q, _modified, radius);
-        
+//         std::cerr << "Points in contour : " << _pq.size() << std::endl;
+//         
+//         resSSD.setTo (std::numeric_limits<float>::max(),
+//                    dilatedMask (cv::Range (radius, _rows - radius),
+//                                 cv::Range (radius, _cols - radius)));
+//         
+//         cv::Point q;
+//         cv::minMaxLoc (resSSD, NULL, NULL, &q);
+//         
+//         q = q + cv::Point (radius, radius);
+//         
+//         const auto& phi_q = patch (q, _modified, radius);
+
 //         cv::Mat PHI_p, PHI_q;
 //         cv::resize (phi_p, PHI_p, cv::Size (100, 100));
 //         cv::resize (phi_q, PHI_q, cv::Size (100, 100));
@@ -152,6 +160,27 @@ void SparseInpaint::draw_contour (cv::Mat& image, const uchar colour)
 {
     for (const auto& c : _contour)
         image.at<uchar> (c.second, c.first) = colour;
+}
+
+/*****************************************************************************/
+
+void SparseInpaint::construct_dictionary (const std::string dictionary_path,
+                                          const int dictionary_size)
+{
+    for (int it = 1; it <= dictionary_size; ++it) {
+    
+        const std::string patch_path = dictionary_path + "/image"
+                                        + std::to_string (it) + ".jpg";
+                                        
+        cv::Mat patch = cv::imread (patch_path, cv::IMREAD_GRAYSCALE);
+        patch = patch.reshape (0, patch.rows * patch.cols);
+        patch.convertTo (patch, CV_64FC1);
+        
+        const double norm = cv::norm (patch);
+        patch = patch / norm;
+        
+        cv::hconcat (_D, patch, _D);
+    }
 }
 
 /*****************************************************************************/
