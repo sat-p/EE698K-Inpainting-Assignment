@@ -1,5 +1,12 @@
 2018-02-06 Satya Panuganti <prakashsatya10@gmail.com>
 
+-Added file code/tools/create_dictionary.cxx which generates a binary
+-create_dictionary which can be used to create the dictionary.
+
+/************************************************************************/
+
+2018-02-06 Satya Panuganti <prakashsatya10@gmail.com>
+
 -Changed Criminisi to SparseInpaint
 -Changed criminisi to sparse_inpaint
 -Removed *.a files

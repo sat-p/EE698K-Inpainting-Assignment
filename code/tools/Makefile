@@ -5,6 +5,7 @@ all:
 	${MAKE} -C src dep
 	${MAKE} -C src obj
 	${MAKE} -C src lib
+	${MAKE} -C src bin
 
 clean:
 	${MAKE} -C src clean

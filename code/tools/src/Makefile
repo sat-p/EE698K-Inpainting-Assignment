@@ -21,7 +21,10 @@ lib: libtools.a
 libtools.a : ${OBJ}
 	${AR} $@ $(OBJ)
 
+bin : create_dictionary.cxx
+	g++ -Wall -O3 -std=c++14 create_dictionary.cxx -o create_dictionary `pkg-config opencv --cflags --libs`
+	
 clean:
-	$(RM) $(DEP) $(OBJ) libtools.a
+	$(RM) $(DEP) $(OBJ) libtools.a create_dictionary
 
 .PHONY: dep obj clean
