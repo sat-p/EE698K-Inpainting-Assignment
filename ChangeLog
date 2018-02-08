@@ -1,6 +1,15 @@
 2018-02-07 Satya Panuganti <prakashsatya10@gmail.com>
 
--Modified SparseInpaint class present in code/algos to load a dictionary from a path.
+-Modified GUI to deal with only grayscale images.
+-Completed Inpainting via Sparse.
+-Need to perform tests.
+
+/************************************************************************/
+
+2018-02-07 Satya Panuganti <prakashsatya10@gmail.com>
+
+-Modified SparseInpaint class present in code/algos to load a dictionary
+ from a path.
 -Need to find a way to remove columns based on mask.
 
 /************************************************************************/

@@ -17,6 +17,7 @@ SparseInpaint::SparseInpaint (const cv::Mat& image,
                               const std::string dictionary_path,
                               const int dictionary_size,
                               const int window_radius) :
+
     _original (image),
     _rows     (image.rows),
     _cols     (image.cols),
@@ -41,21 +42,31 @@ SparseInpaint::SparseInpaint (cv::Mat&& image,
 
 /*****************************************************************************/
 
+cv::Mat remove_rows (const cv::Mat& mat, const cv::Mat_<bool>& remove_mask)
+{
+    cv::Mat res;
+    
+    const int n = mat.rows;
+    for (int i = 0; i < n; ++i) {
+        
+        if (remove_mask.at<bool> (i)) continue;
+        if (res.empty())
+            res = mat.row (i);
+        else
+            cv::vconcat (res, mat.row (i), res);
+    }
+    
+    return res;
+}
+
 cv::Mat SparseInpaint::generate (void)
 {
     generate_contour();
-    _modified = _original.clone().setTo (cv::Vec3b (0, 0, 0),
+    _modified = _original.clone().setTo (0,
                                          _mask);
     generate_priority();
     
-    cv::Mat resSSD;
     cv::Mat pMask;
-    cv::Mat pInvMask;
-    cv::Mat templateMask;
-    cv::Mat mergeArrays[3];
-    
-    cv::Mat dilatedMask;
-    cv::dilate (_mask, dilatedMask, cv::Mat(), cv::Point (-1, -1), _radius);
     
     cv::namedWindow ("modified");
     
@@ -64,68 +75,27 @@ cv::Mat SparseInpaint::generate (void)
         const std::pair<int, int>& point = _pq.rbegin()->second;
         const cv::Point p (point.first, point.second);
         
+        auto phi_p = patch(p, _modified);
+        auto phi_p_ = phi_p.clone();
         
+        phi_p_ = phi_p_.reshape (0, phi_p_.rows * phi_p_.cols);
         
-        auto phi_p = patch (p, _modified);
-        phi_p = phi_p.resize (0, phi_p.rows * phi_p.cols);
-        cv::Mat_<double> D = _D.clone();
+        pMask = patch (p, _mask, _radius);
         
+        auto pMask_ = pMask.clone();
+        pMask_ = pMask_.reshape (0, pMask_.rows * pMask_.cols);
         
-//         const int radius = (phi_p.rows - 1) / 2;
-//         
-//         pMask = patch (p, _mask, radius);
-//         pInvMask = ~pMask;
-//         
-//         templateMask = (pInvMask);
-//         
-//         for (int i = 0; i < 3; ++i)
-//             mergeArrays[i] = templateMask;
-//         
-//         cv::merge(mergeArrays, 3, templateMask);
-// 
-//         cv::matchTemplate (_modified, phi_p, resSSD, CV_TM_SQDIFF, templateMask);        
-//         
-//         cv::Mat mean_p, var_p;
-//         cv::meanStdDev (phi_p, mean_p, var_p, pInvMask);
-//         
-//         cv::Mat mean_q, var_q;
-//         for (int i = radius; i < _cols - radius; ++i) {
-//             for (int j = radius; j < _rows - radius; ++j) {
-//                 
-//                 const cv::Point currentPoint (i, j);
-//                 const cv::Point& resSSDPoint = currentPoint -
-//                                             cv::Point (radius, radius);
-//                                             
-//                 if (dilatedMask.at<uchar> (currentPoint))
-//                     continue;
-//                 
-//                 cv::meanStdDev (patch (currentPoint, _modified, radius),
-//                                 mean_q, var_q);
-//                 
-//                 float& val = resSSD.at<float> (resSSDPoint);
-//                 val += _delta * cv::norm (var_p - var_q);
-//             }
-//         }
+        const auto& D_ = remove_rows (_D, pMask_);
+        phi_p_ = remove_rows (phi_p_, pMask_);
         
-//         std::cerr << "Points in contour : " << _pq.size() << std::endl;
-//         
-//         resSSD.setTo (std::numeric_limits<float>::max(),
-//                    dilatedMask (cv::Range (radius, _rows - radius),
-//                                 cv::Range (radius, _cols - radius)));
-//         
-//         cv::Point q;
-//         cv::minMaxLoc (resSSD, NULL, NULL, &q);
-//         
-//         q = q + cv::Point (radius, radius);
-//         
-//         const auto& phi_q = patch (q, _modified, radius);
-
-//         cv::Mat PHI_p, PHI_q;
-//         cv::resize (phi_p, PHI_p, cv::Size (100, 100));
-//         cv::resize (phi_q, PHI_q, cv::Size (100, 100));
-//         
-//         cv::imshow ("phi_p", PHI_p);
-//         cv::imshow ("phi_q", PHI_q);
+        phi_p_.convertTo (phi_p_, CV_64F);
+        
+        const auto& a = omp (D_, phi_p_);
+        
+        cv::Mat phi_q = _D * a;
+        phi_q.convertTo (phi_q, phi_p.type());
+    
+        phi_q = phi_q.reshape (0, phi_p.rows);
         
         phi_q.copyTo (phi_p, pMask);
         
@@ -143,7 +113,7 @@ cv::Mat SparseInpaint::generate (void)
     }
     
     cv::destroyWindow ("modified");
-    std::cerr << "Completed" << std::endl;
+    std::cout << "Completed" << std::endl;
     
     return _modified;
 }
@@ -169,17 +139,24 @@ void SparseInpaint::construct_dictionary (const std::string dictionary_path,
 {
     for (int it = 1; it <= dictionary_size; ++it) {
     
-        const std::string patch_path = dictionary_path + "/image"
+        const std::string patch_path = dictionary_path + "image"
                                         + std::to_string (it) + ".jpg";
-                                        
+        
         cv::Mat patch = cv::imread (patch_path, cv::IMREAD_GRAYSCALE);
-        patch = patch.reshape (0, patch.rows * patch.cols);
-        patch.convertTo (patch, CV_64FC1);
+        
+        auto patch_ = patch.clone();
+        
+        patch_ = patch_.reshape (0, patch_.rows * patch_.cols);
+        
+        patch_.convertTo (patch, CV_64FC1);
         
         const double norm = cv::norm (patch);
         patch = patch / norm;
         
-        cv::hconcat (_D, patch, _D);
+        if (_D.empty())
+            _D = patch;
+        else
+            cv::hconcat (_D, patch, _D);
     }
 }
 
@@ -379,11 +356,9 @@ double SparseInpaint::priority (const std::pair<int, int>& p)
     
     const cv::Mat& phi_p = patch (point, _modified, radius);
     
-    cv::Mat gray;
-    cv::cvtColor (phi_p, gray, cv::COLOR_RGB2GRAY);
     cv::Mat dx, dy, magnitude;
-    cv::Sobel (gray, dx, CV_64F, 1, 0);
-    cv::Sobel (gray, dy, CV_64F, 0, 1);
+    cv::Sobel (phi_p, dx, CV_64F, 1, 0);
+    cv::Sobel (phi_p, dy, CV_64F, 0, 1);
     
     cv::magnitude (dx, dy, magnitude);
     magnitude.setTo (0, pMask);

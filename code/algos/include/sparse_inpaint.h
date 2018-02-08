@@ -15,11 +15,13 @@ public:
     
 public:
     SparseInpaint (const cv::Mat& image,
-                   const std::string dictionary_path, const int dictionary_size,
+                   const std::string dictionary_path,
+                   const int dictionary_size,
                    const int window_radius = 4);
     
     SparseInpaint (cv::Mat&& image,
-                   const std::string dictionary_path, const int dictionary_size,
+                   const std::string dictionary_path,
+                   const int dictionary_size,
                    const int window_radius = 4);
     
 public:

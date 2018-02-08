@@ -2,4 +2,4 @@
 
 #include <opencv2/core/core.hpp>
 
-cv::Mat omp (const cv::Mat& D, const cv::Mat& X);
+cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X);

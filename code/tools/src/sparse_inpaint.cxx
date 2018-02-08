@@ -12,19 +12,15 @@
 
 cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask)
 {
-    constexpr int RADIUS = 9;
+    constexpr int RADIUS = 4;
     
-    cv::Mat lab_img;
-    cv::cvtColor (img, lab_img, CV_BGR2Lab);
-    
-    SparseInpaint sparse_inpaint (lab_img, RADIUS);
+    SparseInpaint sparse_inpaint (img, "/home/satya/patch/", 256, RADIUS);
     
     cv::Mat mask_clone = mask.clone();
     sparse_inpaint.mask (mask_clone);
-    const auto& res_lab = sparse_inpaint.generate();
-    cv::Mat res;
     
-    cv::cvtColor (res_lab, res, CV_Lab2BGR);
+    const auto& res = sparse_inpaint.generate();
+    
     return res;
 }
 

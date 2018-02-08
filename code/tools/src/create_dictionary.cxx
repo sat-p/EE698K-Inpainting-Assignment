@@ -86,7 +86,7 @@ int main (int argc, char** argv)
         }
     }
     
-    const auto& patches = create_dictionary (images, 8, dictionary_size);
+    const auto& patches = create_dictionary (images, 9, dictionary_size);
     const std::string patch_path = path + "/../patch/";
     
     int count = 1;

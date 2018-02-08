@@ -23,7 +23,7 @@ void UI_MainWindow::WOpen_cb (void)
                                             "", // default
                                             0); // absolute path
     
-    wImageBox1->image (cv::imread (filename, cv::IMREAD_COLOR));
+    wImageBox1->image (cv::imread (filename, cv::IMREAD_GRAYSCALE));
 }
 
 void UI_MainWindow::WQuit_cb (void)
