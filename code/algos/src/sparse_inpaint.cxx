@@ -67,7 +67,6 @@ cv::Mat SparseInpaint::generate (void)
     generate_priority();
     
     cv::Mat pMask;
-    
     cv::namedWindow ("modified");
     
     while (_pq.size()) {
@@ -77,6 +76,9 @@ cv::Mat SparseInpaint::generate (void)
         
         auto phi_p = patch(p, _modified);
         auto phi_p_ = phi_p.clone();
+        
+        phi_p_.convertTo (phi_p_, CV_64F);
+        phi_p_ = phi_p_ / 255;
         
         phi_p_ = phi_p_.reshape (0, phi_p_.rows * phi_p_.cols);
         
@@ -88,20 +90,32 @@ cv::Mat SparseInpaint::generate (void)
         const auto& D_ = remove_rows (_D, pMask_);
         phi_p_ = remove_rows (phi_p_, pMask_);
         
-        phi_p_.convertTo (phi_p_, CV_64F);
-        
         const auto& a = omp (D_, phi_p_);
         
         cv::Mat phi_q = _D * a;
+        
+        phi_q = phi_q * 255;
         phi_q.convertTo (phi_q, phi_p.type());
-    
+        
         phi_q = phi_q.reshape (0, phi_p.rows);
+        
+        cv::Mat P, Q, M;
+        
+        cv::resize (phi_p, P, cv::Size (90, 90));
+        cv::resize (phi_q, Q, cv::Size (90, 90));
+        cv::resize (pMask, M, cv::Size (90, 90));
+        
+        cv::imshow ("P", P);
+        cv::imshow ("Q", Q);
+        cv::imshow ("M", M);
         
         phi_q.copyTo (phi_p, pMask);
         
         cv::Mat confPatch = patch (p, _confidence);
         const double confidence = cv::sum (confPatch)[0] /
                                   confPatch.total();
+        
+        
         confPatch.setTo (confidence, pMask);
         
         pMask.setTo (0);
@@ -109,6 +123,7 @@ cv::Mat SparseInpaint::generate (void)
         update_contour (p);
         
         cv::imshow ("modified", _modified);
+        
         cv::waitKey (1);
     }
     
