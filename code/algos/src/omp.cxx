@@ -8,12 +8,12 @@
 
 /*****************************************************************************/
 
-constexpr double epsilon = 1e-3;
-constexpr int tau = 6;
+constexpr double epsilon = 1e-4;
 
 /*****************************************************************************/
 
-cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X)
+cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
+                      const int tau = 6)
 {
     cv::Mat_<double> phi;
     const int num_atoms = D.cols;
@@ -22,8 +22,9 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X)
     cv::Mat_<double> a;
     std::vector<int> col_order;
     
-    int count = 0;
-    while (cv::norm (r) > epsilon && count < tau) {
+    for (int count = 0; count < tau && cv::norm (r) > epsilon; ++count) {
+        
+        std::cout << "count : " << count << std::endl;
         
         double best_inner = 0;
         int    best_idx = 0;
@@ -55,15 +56,13 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X)
         cv::Mat_<double> zoomX, zoomX_;
         cv::resize (X, zoomX, cv::Size (300, X.rows));
         cv::resize (phi * a, zoomX_, cv::Size (300, X.rows));
-        
-        ++count;
     }
+    
+    std::cout << "residual norm : " << cv::norm (r) << std::endl;
     
     cv::Mat_<double> a_ = cv::Mat_<double>::zeros (D.cols, 1);
     
-    std::cout << "sparsity " << count << std::endl;
-    
-    count = 0;
+    int count = 0;
     cv::MatConstIterator_<double> it = a.begin();
     const cv::MatConstIterator_<double> it_end = a.end();
     

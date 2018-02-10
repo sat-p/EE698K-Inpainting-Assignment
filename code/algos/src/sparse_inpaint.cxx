@@ -16,6 +16,7 @@
 SparseInpaint::SparseInpaint (const cv::Mat& image,
                               const std::string dictionary_path,
                               const int dictionary_size,
+                              const int sparsity,
                               const int window_radius) :
 
     _original (image),
@@ -23,7 +24,8 @@ SparseInpaint::SparseInpaint (const cv::Mat& image,
     _cols     (image.cols),
     _radius   (window_radius),
     _w        (DEFAULT_W),
-    _delta    (DEFAULT_DELTA)
+    _delta    (DEFAULT_DELTA),
+    _sparsity (sparsity)
 { construct_dictionary (dictionary_path, dictionary_size); }
 
 /*****************************************************************************/
@@ -31,13 +33,15 @@ SparseInpaint::SparseInpaint (const cv::Mat& image,
 SparseInpaint::SparseInpaint (cv::Mat&& image,
                               const std::string dictionary_path,
                               const int dictionary_size,
+                              const int sparsity,
                               const int window_radius) :
     _original (image),
     _rows     (image.rows),
     _cols     (image.cols),
     _radius   (window_radius),
     _w        (DEFAULT_W),
-    _delta    (DEFAULT_DELTA)
+    _delta    (DEFAULT_DELTA),
+    _sparsity (sparsity)
 { construct_dictionary (dictionary_path, dictionary_size); }
 
 /*****************************************************************************/
@@ -95,7 +99,7 @@ cv::Mat SparseInpaint::generate (void)
         const auto& D_ = remove_rows (_D, pMask_);
         phi_p_ = remove_rows (phi_p_, pMask_);
         
-        const auto& a = omp (D_, phi_p_);
+        const auto& a = omp (D_, phi_p_, _sparsity);
         
         cv::Mat phi_q = _D * a;
         

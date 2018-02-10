@@ -17,11 +17,13 @@ public:
     SparseInpaint (const cv::Mat& image,
                    const std::string dictionary_path,
                    const int dictionary_size,
+                   const int sparsity,
                    const int window_radius = 4);
     
     SparseInpaint (cv::Mat&& image,
                    const std::string dictionary_path,
                    const int dictionary_size,
+                   const int sparsity,
                    const int window_radius = 4);
     
 public:
@@ -88,4 +90,7 @@ protected:
 protected:
     double _w;
     double _delta;
+    
+protected:
+    int _sparsity;
 };

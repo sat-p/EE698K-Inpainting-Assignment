@@ -8,7 +8,8 @@
 namespace EE698K {
 namespace tools {
 
-cv::Mat sparse_inpaint (const cv::Mat& img, const cv::Mat& mask);
+cv::Mat
+sparse_inpaint (const cv::Mat& img, const cv::Mat& mask, const int sparsity);
     
 }} // namespaces EE698K, tools
 

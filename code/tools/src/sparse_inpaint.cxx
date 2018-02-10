@@ -10,12 +10,14 @@
  * reference
  */
 
-cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask)
+cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask,
+                                       const int sparsity)
 {
     constexpr int RADIUS = 4;
     
     SparseInpaint sparse_inpaint (img, "/home/satya/workspace/Acads/EE698K/patch/",
-                                  256, RADIUS);
+                                  256, RADIUS,
+                                  sparsity);
     
     cv::Mat mask_clone = mask.clone();
     

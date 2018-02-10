@@ -31,8 +31,7 @@ int main (int argc, char* argv[])
     
     mask.copyTo (with_mask, mask);
     
-    auto result = EE698K::tools::sparse_inpaint (spects_image, mask);
-    
+    auto result = EE698K::tools::sparse_inpaint (spects_image, mask, 5);    
     
     cv::namedWindow("Inpainted", cv::WINDOW_NORMAL);
     cv::imshow ("Inpainted", result);
