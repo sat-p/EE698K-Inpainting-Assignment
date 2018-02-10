@@ -3,12 +3,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#include <iostream>
 #include <cmath>
-
-/*****************************************************************************/
-
-constexpr double epsilon = 1e-4;
 
 /*****************************************************************************/
 
@@ -22,9 +17,7 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
     cv::Mat_<double> a;
     std::vector<int> col_order;
     
-    for (int count = 0; count < tau && cv::norm (r) > epsilon; ++count) {
-        
-        std::cout << "count : " << count << std::endl;
+    for (int count = 0; count < tau; ++count) {
         
         double best_inner = 0;
         int    best_idx = 0;
@@ -57,8 +50,6 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
         cv::resize (X, zoomX, cv::Size (300, X.rows));
         cv::resize (phi * a, zoomX_, cv::Size (300, X.rows));
     }
-    
-    std::cout << "residual norm : " << cv::norm (r) << std::endl;
     
     cv::Mat_<double> a_ = cv::Mat_<double>::zeros (D.cols, 1);
     
