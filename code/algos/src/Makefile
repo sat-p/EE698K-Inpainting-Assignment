@@ -2,8 +2,6 @@ top_builddir = ../../..
 include ${top_builddir}/makeinclude
 
 CPP_SRC = \
-	slic.cxx \
-	slicGC.cxx \
 	sparse_inpaint.cxx \
 	omp.cxx
 

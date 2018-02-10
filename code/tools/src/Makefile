@@ -2,7 +2,6 @@ top_builddir = ../../..
 include ${top_builddir}/makeinclude
 
 CPP_SRC = \
-	convert.cxx \
     sparse_inpaint.cxx
 
 OBJ = ${CPP_SRC:%.cxx=%.o}

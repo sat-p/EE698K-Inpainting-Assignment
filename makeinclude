@@ -8,7 +8,6 @@ LIB = \
     -L${top_builddir}/code/algos/src \
     -ltools \
     -lalgos \
-	-lfltk \
 	`pkg-config opencv --cflags --libs`
     
 FLAGS = -g -Wall -O3 -std=c++11

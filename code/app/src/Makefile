@@ -2,11 +2,6 @@ top_builddir = ../../..
 include ${top_builddir}/makeinclude
 
 CPP_SRC = \
-	WC_ImageBox.cxx \
-	UI_ImageBox.cxx \
-	UI_DrawImageBox.cxx \
-	WC_MainWindow.cxx \
-	UI_MainWindow.cxx \
 	main.cxx
 
 OBJ = ${CPP_SRC:%.cxx=%.o}

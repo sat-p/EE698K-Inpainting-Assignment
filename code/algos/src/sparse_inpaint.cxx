@@ -67,7 +67,12 @@ cv::Mat SparseInpaint::generate (void)
     generate_priority();
     
     cv::Mat pMask;
-    cv::namedWindow ("modified");
+    
+    cv::namedWindow ("P");
+    cv::namedWindow ("Q");
+    cv::namedWindow ("M");
+    
+    cv::namedWindow ("modified", cv::WINDOW_NORMAL);
     
     while (_pq.size()) {
         
@@ -126,6 +131,10 @@ cv::Mat SparseInpaint::generate (void)
         
         cv::waitKey (1);
     }
+    
+    cv::destroyWindow ("P");
+    cv::destroyWindow ("Q");
+    cv::destroyWindow ("M");
     
     cv::destroyWindow ("modified");
     std::cout << "Completed" << std::endl;

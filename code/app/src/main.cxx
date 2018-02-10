@@ -1,35 +1,42 @@
-#include "../include/UI_MainWindow.h"
-#include <FL/fl_ask.H>
-#include <memory>
 #include <iostream>
-#include <stdexcept>
+
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+#include "../../tools/include/sparse_inpaint.h"
 
 int main (int argc, char* argv[])
 {
-    Fl::scheme ("gtk+");
-    Fl::background (0xEC, 0xE9, 0xD8);
+    if (argc != 3) {
     
-    std::unique_ptr<EE698K::GUI::UI_MainWindow> ui;
+        std::cout << "Please input paths to image with spectacles and"
+                  << " to the mask" << std::endl;
+        return 0;
+    }
     
-    try {
-
-		int X, Y, W, H;
-		Fl::screen_xywh (X, Y, W, H);
-		
-		ui.reset (new EE698K::GUI::UI_MainWindow);
-		ui->resize (X, Y, W, H);
-		ui->show (argc, argv);
-        
-        ui->size_range (W, H, W, H);
-        
-		return Fl::run();
-	}
-	catch (std::exception& e)
-	{
-		if (ui) ui->hide();
-		fl_alert (
-			"%s", e.what());
-		std::cerr << e.what() << std::endl;
-	}
+    const auto spects_image = cv::imread (argv[1], cv::IMREAD_GRAYSCALE);    
+    const auto mask = cv::imread (argv[2], cv::IMREAD_GRAYSCALE);
     
+    auto with_mask = spects_image.clone();
+    
+    const auto patch = cv::imread ("/home/satya/workspace/Acads/EE698K/patch/image1.jpg");
+    cv::imshow ("patch", patch);
+    
+    cv::namedWindow("Original", cv::WINDOW_NORMAL);
+    cv::imshow ("Original", with_mask);
+    
+    std::cout << "spects_image size" << spects_image.size() << std::endl;
+    std::cout << "mask size" << mask.size() << std::endl;
+    std::cout << "patch size" << patch.size() << std::endl;
+    
+    mask.copyTo (with_mask, mask);
+    
+    auto result = EE698K::tools::sparse_inpaint (spects_image, mask);
+    
+    
+    cv::namedWindow("Inpainted", cv::WINDOW_NORMAL);
+    cv::imshow ("Inpainted", result);
+    
+    cv::waitKey (0);
+    return 0;
 }

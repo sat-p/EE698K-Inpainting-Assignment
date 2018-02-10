@@ -14,13 +14,14 @@ cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask)
 {
     constexpr int RADIUS = 4;
     
-    SparseInpaint sparse_inpaint (img, "/home/satya/patch/", 256, RADIUS);
+    SparseInpaint sparse_inpaint (img, "/home/satya/workspace/Acads/EE698K/patch/",
+                                  256, RADIUS);
     
     cv::Mat mask_clone = mask.clone();
+    
     sparse_inpaint.mask (mask_clone);
     
-    const auto& res = sparse_inpaint.generate();
-    
+    const auto& res = sparse_inpaint.generate();    
     return res;
 }
 
