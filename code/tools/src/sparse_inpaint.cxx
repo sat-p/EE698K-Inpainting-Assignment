@@ -1,6 +1,11 @@
 #include "../include/sparse_inpaint.h"
 
+#include "../../algos/include/omp.h"
+#include "../../algos/include/irls.h"
+
 #include <opencv2/imgproc/imgproc.hpp>
+
+#include <functional>
 
 /*****************************************************************************/
 
@@ -11,7 +16,7 @@
  */
 
 cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask,
-                                       const int sparsity)
+                                       const double sparsity)
 {
     constexpr int RADIUS = 4;
     
@@ -22,6 +27,10 @@ cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask,
     
     cv::Mat mask_clone = mask.clone();
     sparse_inpaint.mask (mask_clone);
+    
+    using namespace std::placeholders;
+//     sparse_inpaint._solver = std::bind (omp, _1, _2, _3);
+    sparse_inpaint._solver = std::bind (irls, _1, _2, _3);
     
     const auto& res = sparse_inpaint.generate();    
     return res;

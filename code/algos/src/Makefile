@@ -3,7 +3,8 @@ include ${top_builddir}/makeinclude
 
 CPP_SRC = \
 	sparse_inpaint.cxx \
-	omp.cxx
+	omp.cxx \
+	irls.cxx
 
 OBJ = ${CPP_SRC:%.cxx=%.o}
 DEP = ${CPP_SRC:%.cxx=%.dep}

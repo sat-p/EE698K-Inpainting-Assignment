@@ -25,13 +25,9 @@ int main (int argc, char* argv[])
     cv::namedWindow("Original", cv::WINDOW_NORMAL);
     cv::imshow ("Original", with_mask);
     
-    std::cout << "spects_image size" << spects_image.size() << std::endl;
-    std::cout << "mask size" << mask.size() << std::endl;
-    std::cout << "patch size" << patch.size() << std::endl;
-    
     mask.copyTo (with_mask, mask);
     
-    auto result = EE698K::tools::sparse_inpaint (spects_image, mask, 5);    
+    auto result = EE698K::tools::sparse_inpaint (spects_image, mask, 1e-5);    
     
     cv::namedWindow("Inpainted", cv::WINDOW_NORMAL);
     cv::imshow ("Inpainted", result);

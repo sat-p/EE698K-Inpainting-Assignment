@@ -6,6 +6,7 @@
 #include <set>
 #include <utility>
 #include <map>
+#include <functional>
 
 class SparseInpaint
 {
@@ -17,13 +18,13 @@ public:
     SparseInpaint (const cv::Mat& image,
                    const std::string dictionary_path,
                    const int dictionary_size,
-                   const int sparsity,
+                   const double sparsity,
                    const int window_radius = 4);
     
     SparseInpaint (cv::Mat&& image,
                    const std::string dictionary_path,
                    const int dictionary_size,
-                   const int sparsity,
+                   const double sparsity,
                    const int window_radius = 4);
     
 public:
@@ -92,5 +93,10 @@ protected:
     double _delta;
     
 protected:
-    int _sparsity;
+    double _sparsity;
+    
+public:
+    std::function<cv::Mat_<double>(const cv::Mat_<double>& D,
+                                   const cv::Mat_<double>& X,
+                                   const double epsilon)>           _solver;
 };

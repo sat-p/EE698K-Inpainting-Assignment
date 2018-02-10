@@ -8,7 +8,7 @@
 /*****************************************************************************/
 
 cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
-                      const int tau = 6)
+                      const double tau = 6)
 {
     cv::Mat_<double> phi;
     const int num_atoms = D.cols;
@@ -38,8 +38,7 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
             phi = D.col (best_idx);
         else
             cv::hconcat (phi, D.col (best_idx), phi);
-//         cv::SVD svd (phi);
-//         const auto phi_inv = svd.vt.t() * cv::Mat::diag (1.0 / svd.w) * svd.u.t();
+
         const auto phi_inv = phi.inv (cv::DECOMP_SVD);
         
         a = phi_inv * X;

@@ -1,7 +1,5 @@
 #include "../include/sparse_inpaint.h"
 
-#include "../include/omp.h"
-
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
@@ -16,7 +14,7 @@
 SparseInpaint::SparseInpaint (const cv::Mat& image,
                               const std::string dictionary_path,
                               const int dictionary_size,
-                              const int sparsity,
+                              const double sparsity,
                               const int window_radius) :
 
     _original (image),
@@ -33,7 +31,7 @@ SparseInpaint::SparseInpaint (const cv::Mat& image,
 SparseInpaint::SparseInpaint (cv::Mat&& image,
                               const std::string dictionary_path,
                               const int dictionary_size,
-                              const int sparsity,
+                              const double sparsity,
                               const int window_radius) :
     _original (image),
     _rows     (image.rows),
@@ -99,7 +97,7 @@ cv::Mat SparseInpaint::generate (void)
         const auto& D_ = remove_rows (_D, pMask_);
         phi_p_ = remove_rows (phi_p_, pMask_);
         
-        const auto& a = omp (D_, phi_p_, _sparsity);
+        const auto& a = _solver (D_, phi_p_, _sparsity);
         
         cv::Mat phi_q = _D * a;
         
