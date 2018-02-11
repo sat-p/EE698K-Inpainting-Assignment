@@ -25,6 +25,8 @@ Instructions:
       
       All commands are to be perfomed from the main directory.
       Code was tested on an Ubuntu 16.04 computer.
+      Directies photos, data, patch need to exist in the main directory for code to
+      work.
       
 Description of files:
     - code/app : Contains the main file which returns Inpainted Image after
