@@ -54,9 +54,9 @@ std::vector<cv::Mat> create_dictionary
 
 int main (int argc, char** argv)
 {
-    if (argc != 4) {
+    if (argc != 3) {
     
-        std::cout << "Please input number of images, dictionary size and path of images"
+        std::cout << "Please input number of images and path of images"
                   << std::endl;
         return 0;
     }
@@ -64,8 +64,8 @@ int main (int argc, char** argv)
     constexpr int dict_len = 8;
     
     const int num_images = std::stoi (argv[1]);
-    const int dictionary_size = std::stoi (argv[2]);
-    const std::string path (argv[3]);
+    constexpr int dictionary_size = 256;
+    const std::string path (argv[2]);
     
     std::vector<cv::Mat> images;
     
@@ -95,7 +95,7 @@ int main (int argc, char** argv)
     for (const auto& patch : patches) {
         
         const std::string write_name = patch_path + "image" +
-                                       std::to_string (count) + ".jpg";
+                                       std::to_string (count) + ".png";
         
         std::cout << write_name << std::endl;
                                        
@@ -103,6 +103,38 @@ int main (int argc, char** argv)
         
         ++count;
     }
+    
+    cv::Mat dict128 (cv::Size (8 * 16, 8 * 8), patches.front().type());
+
+    auto atom = patches.begin();
+    for (int count = 0; count < 128; ++count) {
+    
+        const int i = count % 16;
+        const int j = count / 16;
+        
+        atom->copyTo (dict128 (cv::Range (j * 8, (j + 1) * 8),
+                               cv::Range (i * 8, (i + 1) * 8)));
+        
+        ++atom;
+    }
+    
+    cv::imwrite (patch_path + "dict128.png", dict128);
+    
+    cv::Mat dict256 (cv::Size (8 * 16, 8 * 16), patches.front().type());
+
+    atom = patches.begin();
+    for (int count = 0; count < 256; ++count) {
+    
+        const int i = count % 16;
+        const int j = count / 16;
+        
+        atom->copyTo (dict256 (cv::Range (j * 8, (j + 1) * 8),
+                               cv::Range (i * 8, (i + 1) * 8)));
+        
+        ++atom;
+    }
+    
+    cv::imwrite (patch_path + "dict256.png", dict256);
     
     return 0;
 }

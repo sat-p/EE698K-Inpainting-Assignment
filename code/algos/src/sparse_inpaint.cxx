@@ -166,7 +166,7 @@ void SparseInpaint::construct_dictionary (const std::string dictionary_path,
     for (int it = 1; it <= dictionary_size; ++it) {
     
         const std::string patch_path = dictionary_path + "image"
-                                        + std::to_string (it) + ".jpg";
+                                        + std::to_string (it) + ".png";
         
         cv::Mat patch = cv::imread (patch_path, cv::IMREAD_GRAYSCALE);
         

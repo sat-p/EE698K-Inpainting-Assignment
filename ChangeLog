@@ -1,5 +1,12 @@
 2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
 
+-Storing patches in .png format (loseless).
+-code/tools/src/create_dictionary.cxx now creates dict128.png and dict256.png
+
+/************************************************************************/
+
+2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
+
 -Changed patch size to 8x8.
 -Added code/tools/src/niqe.py
 
