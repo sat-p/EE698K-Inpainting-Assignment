@@ -10,8 +10,8 @@ sys.path.insert(0, './code/tools/src/')
 from niqe import niqe
 
 ep_start = 0
-ep_end = -10
-N = 10
+ep_end = -5
+N = 20
 
 epsilon = np.logspace(start=ep_start, stop=ep_end, num=N)
 print epsilon

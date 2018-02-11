@@ -1,5 +1,12 @@
 2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
 
+-Added README.
+-Changed range of error threshold in script.py
+
+/************************************************************************/
+
+2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
+
 -Added script to compare IRLS and OMP with different dictionary sizes
 
 /************************************************************************/
