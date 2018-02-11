@@ -1,14 +1,12 @@
 #include "../include/omp.h"
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-
 #include <cmath>
+#include <vector>
 
 /*****************************************************************************/
 
 cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
-                      const double tau = 6)
+                      const double epsilon = 1e-4)
 {
     cv::Mat_<double> phi;
     const int num_atoms = D.cols;
@@ -17,7 +15,7 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
     cv::Mat_<double> a;
     std::vector<int> col_order;
     
-    for (int count = 0; count < tau; ++count) {
+    while (cv::norm (r) > epsilon) {
         
         double best_inner = 0;
         int    best_idx = 0;
@@ -44,22 +42,22 @@ cv::Mat_<double> omp (const cv::Mat_<double>& D, const cv::Mat_<double>& X,
         a = phi_inv * X;
         
         r = X - phi * a;
-        
-        cv::Mat_<double> zoomX, zoomX_;
-        cv::resize (X, zoomX, cv::Size (300, X.rows));
-        cv::resize (phi * a, zoomX_, cv::Size (300, X.rows));
     }
     
     cv::Mat_<double> a_ = cv::Mat_<double>::zeros (D.cols, 1);
     
-    int count = 0;
-    cv::MatConstIterator_<double> it = a.begin();
-    const cv::MatConstIterator_<double> it_end = a.end();
-    
-    while (it != it_end) {
+    if (!a.empty()) {
         
-        a_.at<double> (col_order[count++]) = *it;
-        ++it;
+        int count = 0;
+        
+        cv::MatConstIterator_<double> it = a.begin();
+        const cv::MatConstIterator_<double> it_end = a.end();
+        
+        while (it != it_end) {
+            
+            a_.at<double> (col_order[count++]) = *it;
+            ++it;
+        }
     }
     
     return a_;

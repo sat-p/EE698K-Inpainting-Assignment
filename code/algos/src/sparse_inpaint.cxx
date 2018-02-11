@@ -75,6 +75,7 @@ cv::Mat SparseInpaint::generate (void)
     cv::namedWindow ("M");
     
     cv::namedWindow ("modified", cv::WINDOW_NORMAL);
+    bool first = true;
     
     while (_pq.size()) {
         
@@ -106,15 +107,19 @@ cv::Mat SparseInpaint::generate (void)
         
         phi_q = phi_q.reshape (0, phi_p.rows);
         
-        cv::Mat P, Q, M;
-        
-        cv::resize (phi_p, P, cv::Size (90, 90));
-        cv::resize (phi_q, Q, cv::Size (90, 90));
-        cv::resize (pMask, M, cv::Size (90, 90));
-        
-        cv::imshow ("P", P);
-        cv::imshow ("Q", Q);
-        cv::imshow ("M", M);
+        if (first) {
+            cv::Mat P, Q, M;
+            
+            cv::resize (phi_p, P, cv::Size (160, 160), cv::INTER_NEAREST);
+            cv::resize (phi_q, Q, cv::Size (160, 160), cv::INTER_NEAREST);
+            cv::resize (pMask, M, cv::Size (160, 160), cv::INTER_NEAREST);
+            
+            cv::imshow ("P", P);
+            cv::imshow ("Q", Q);
+            cv::imshow ("M", M);
+            
+            first = false;
+        }
         
         phi_q.copyTo (phi_p, pMask);
         
@@ -133,10 +138,6 @@ cv::Mat SparseInpaint::generate (void)
         
         cv::waitKey (1);
     }
-    
-    cv::destroyWindow ("P");
-    cv::destroyWindow ("Q");
-    cv::destroyWindow ("M");
     
     cv::destroyWindow ("modified");
     std::cout << "Completed" << std::endl;

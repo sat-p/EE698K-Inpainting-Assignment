@@ -16,21 +16,25 @@
  */
 
 cv::Mat EE698K::tools::sparse_inpaint (const cv::Mat& img, const cv::Mat& mask,
-                                       const double sparsity)
+                                       const int dictionary_size,
+                                       const double epsilon,
+                                       bool IRLS_flag)
 {
     constexpr int RADIUS = 4;
     
-    SparseInpaint sparse_inpaint (img, "/home/satya/workspace/Acads/EE698K/patch/",
-                                  256,
-                                  sparsity,
+    SparseInpaint sparse_inpaint (img, "./patch/",
+                                  dictionary_size,
+                                  epsilon,
                                   RADIUS);
     
     cv::Mat mask_clone = mask.clone();
     sparse_inpaint.mask (mask_clone);
     
     using namespace std::placeholders;
-//     sparse_inpaint._solver = std::bind (omp, _1, _2, _3);
-    sparse_inpaint._solver = std::bind (irls, _1, _2, _3);
+    if (IRLS_flag)
+        sparse_inpaint._solver = std::bind (irls, _1, _2, _3);
+    else
+        sparse_inpaint._solver = std::bind (omp, _1, _2, _3);
     
     const auto& res = sparse_inpaint.generate();    
     return res;

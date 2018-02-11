@@ -1,4 +1,7 @@
 #include <iostream>
+#include <cstdlib>
+#include <string>
+#include <sstream>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -7,31 +10,37 @@
 
 int main (int argc, char* argv[])
 {
-    if (argc != 3) {
+    if (!(argc == 4 || argc == 3)) {
     
-        std::cout << "Please input paths to image with spectacles and"
-                  << " to the mask" << std::endl;
+        std::cout << "Please input epsilon followed by dictionary size."
+                  << " Also, append some extra data for irls"
+                  << std::endl;
         return 0;
     }
     
-    const auto spects_image = cv::imread (argv[1], cv::IMREAD_GRAYSCALE);    
-    const auto mask = cv::imread (argv[2], cv::IMREAD_GRAYSCALE);
+    const auto spects_image = cv::imread ("./photos/image1.jpg",
+                                          cv::IMREAD_GRAYSCALE);    
+    const auto mask = cv::imread ("./photos/patch.bmp", cv::IMREAD_GRAYSCALE);
     
     auto with_mask = spects_image.clone();
-    
-    const auto patch = cv::imread ("/home/satya/workspace/Acads/EE698K/patch/image1.jpg");
-    cv::imshow ("patch", patch);
     
     cv::namedWindow("Original", cv::WINDOW_NORMAL);
     cv::imshow ("Original", with_mask);
     
     mask.copyTo (with_mask, mask);
     
-    auto result = EE698K::tools::sparse_inpaint (spects_image, mask, 1e-5);    
+    auto result = EE698K::tools::sparse_inpaint (spects_image, mask,
+                                                 std::atoi (argv[2]),
+                                                 std::stod (argv[1]),
+                                                 argc == 4);    
     
-    cv::namedWindow("Inpainted", cv::WINDOW_NORMAL);
-    cv::imshow ("Inpainted", result);
+    std::stringstream output;
+    output << "./data/" << argv[1] << "_"  << argv[2];
     
-    cv::waitKey (0);
+    if (argc == 3)
+        cv::imwrite (output.str() + "_omp.jpg", result);
+    else
+        cv::imwrite (output.str() + "_irls.jpg", result);
+
     return 0;
 }

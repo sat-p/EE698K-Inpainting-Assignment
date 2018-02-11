@@ -9,7 +9,10 @@ namespace EE698K {
 namespace tools {
 
 cv::Mat
-sparse_inpaint (const cv::Mat& img, const cv::Mat& mask, const double sparsity);
+sparse_inpaint (const cv::Mat& img, const cv::Mat& mask,
+                const int dictionary_size,
+                const double epsilon,
+                bool IRLS_flag);
     
 }} // namespaces EE698K, tools
 

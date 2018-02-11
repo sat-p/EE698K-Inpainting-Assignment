@@ -1,7 +1,5 @@
 #include "../include/irls.h"
 
-#include <iostream>
-
 /*****************************************************************************/
 
 cv::Mat_<double> irls
@@ -14,8 +12,6 @@ cv::Mat_<double> irls
         cv::Mat W_2 = cv::Mat::diag (a.mul (a));
         a = W_2 * D.t() * (D * W_2 * D.t()).inv() * X;
     }
-    
-    std::cout << "norm : " << cv::norm (X - D * a) << '\n';
     
     return a;
 }
