@@ -34,5 +34,8 @@
 # Dependancies
 *.dep
 
-#create_dictionary
+# create_dictionary
 create_dictionary
+
+# .pyc
+*.pyc

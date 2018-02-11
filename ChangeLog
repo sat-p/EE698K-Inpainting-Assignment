@@ -1,5 +1,11 @@
 2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
 
+-Added script to compare IRLS and OMP with different dictionary sizes
+
+/************************************************************************/
+
+2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
+
 -Modified code so that it can be run through a script
 
 /************************************************************************/

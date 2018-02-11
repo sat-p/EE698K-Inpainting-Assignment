@@ -154,7 +154,7 @@ def niqe(img):
 
     return niqe_quality
 
-import sys
-img = scipy.misc.imread(sys.argv[1], flatten=True).astype(numpy.float)/255.0
+#import sys
+#img = scipy.misc.imread(sys.argv[1], flatten=True).astype(numpy.float)/255.0
 
-print "NIQE = %f" %(niqe(img))
+#print "NIQE = %f" %(niqe(img))
