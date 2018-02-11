@@ -89,7 +89,7 @@ cv::Mat SparseInpaint::generate (void)
         
         phi_p_ = phi_p_.reshape (0, phi_p_.rows * phi_p_.cols);
         
-        pMask = patch (p, _mask, _radius);
+        pMask = patch (p, _mask);
         
         auto pMask_ = pMask.clone();
         pMask_ = pMask_.reshape (0, pMask_.rows * pMask_.cols);
@@ -243,13 +243,13 @@ void SparseInpaint::generate_priority (void)
 
 /*****************************************************************************/
 
-cv::Point2d SparseInpaint::generate_normal (const cv::Point& p, const int radius)
+cv::Point2d SparseInpaint::generate_normal (const cv::Point& p)
 {
     std::vector<double> X;
     std::vector<double> Y;
     
-    for (int i = p.x - radius; i <= p.x + radius; ++i) {
-        for (int j = p.y - radius; j <= p.y + radius; ++j) {
+    for (int i = p.x - _radius; i < p.x + _radius; ++i) {
+        for (int j = p.y - _radius; j < p.y + _radius; ++j) {
             if (_contour.count (std::make_pair (i, j))) {
             
                 X.push_back (i);
@@ -364,8 +364,8 @@ double SparseInpaint::priority (const std::pair<int, int>& p)
     const cv::Point& point = cv::Point (p.first, p.second);
     
     const cv::Mat& confPatch = patch (point, _confidence);
-    const int radius = (confPatch.rows - 1) / 2;
-    const cv::Mat& pMask = patch (point, _mask, radius);
+    
+    const cv::Mat& pMask = patch (point, _mask);
     
     cv::Mat maskedConfidence = cv::Mat::zeros (confPatch.size(),
                                                CV_64FC1);
@@ -378,9 +378,9 @@ double SparseInpaint::priority (const std::pair<int, int>& p)
 //     const double confidence = (cv::sum (maskedConfidence)[0] /
 //                                confPatch.total());
     
-    const cv::Point2f& normal = generate_normal (point, radius);
+    const cv::Point2f& normal = generate_normal (point);
     
-    const cv::Mat& phi_p = patch (point, _modified, radius);
+    const cv::Mat& phi_p = patch (point, _modified);
     
     cv::Mat dx, dy, magnitude;
     cv::Sobel (phi_p, dx, CV_64F, 1, 0);
@@ -408,22 +408,8 @@ double SparseInpaint::priority (const std::pair<int, int>& p)
 
 cv::Mat SparseInpaint::patch (const cv::Point& p, const cv::Mat& img)
 {
-    const int r[4] = {p.x, p.y, _cols - p.x, _rows - p.y};
-    
-    const int radius = std::min (*std::min_element (r, r + 4) - 1,
-                                 _radius);
-    
-    return img  (cv::Range (p.y - radius, p.y + radius + 1),
-                 cv::Range (p.x - radius, p.x + radius + 1));
-}
-
-/*****************************************************************************/
-
-cv::Mat SparseInpaint::patch
-(const cv::Point& p,const cv::Mat& img, const int radius)
-{
-    return img  (cv::Range (p.y - radius, p.y + radius + 1),
-                 cv::Range (p.x - radius, p.x + radius + 1));
+    return img  (cv::Range (p.y - _radius, p.y + _radius),
+                 cv::Range (p.x - _radius, p.x + _radius));
 }
 
 /*****************************************************************************/

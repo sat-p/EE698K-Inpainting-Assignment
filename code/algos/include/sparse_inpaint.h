@@ -56,7 +56,7 @@ private:
     void generate_contour (void);
     void generate_priority (void);
     
-    cv::Point2d generate_normal (const cv::Point& p, int radius);
+    cv::Point2d generate_normal (const cv::Point& p);
     
     void update_contour (const cv::Point& p);
     
@@ -64,7 +64,6 @@ private:
     
 private:
     cv::Mat patch (const cv::Point& p, const cv::Mat& img);
-    cv::Mat patch (const cv::Point& p, const cv::Mat& img, const int radius);
     
 protected:
     cv::Mat _original;

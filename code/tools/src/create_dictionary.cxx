@@ -61,6 +61,8 @@ int main (int argc, char** argv)
         return 0;
     }
     
+    constexpr int dict_len = 8;
+    
     const int num_images = std::stoi (argv[1]);
     const int dictionary_size = std::stoi (argv[2]);
     const std::string path (argv[3]);
@@ -86,7 +88,7 @@ int main (int argc, char** argv)
         }
     }
     
-    const auto& patches = create_dictionary (images, 9, dictionary_size);
+    const auto& patches = create_dictionary (images, dict_len, dictionary_size);
     const std::string patch_path = path + "/../patch/";
     
     int count = 1;

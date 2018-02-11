@@ -1,5 +1,12 @@
 2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
 
+-Changed patch size to 8x8.
+-Added code/tools/src/niqe.py
+
+/************************************************************************/
+
+2018-02-11 Satya Panuganti <prakashsatya10@gmail.com>
+
 -Added FOCUSS solver.
  Also made it possible to choose between different pursuit algorithms by
  the sparse inpaint class in code/algos/
